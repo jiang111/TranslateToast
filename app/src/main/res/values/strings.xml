@@ -2,5 +2,7 @@
     <string name="app_name">翻译助手</string>
     <string name="tip">原文内容:</string>
     <string name="result">翻译:</string>
+    <string name="action_about">关于该项目</string>
+    <string name="action_export">导出到本地</string>
 </resources>
 

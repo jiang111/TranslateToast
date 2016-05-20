@@ -1,11 +1,18 @@
 package com.jiang.android.translatetoast;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private List<TranslateModel> mLists = new ArrayList<>();
     private Subscription subscription;
     private Gson mGson;
+    private Dialog mDialog;
 
     public static void startForContent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -45,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.main_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(new BaseAdapter() {
@@ -128,6 +138,45 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_about) {
+            String url = "https://github.com/jiang111/TranslateToast";
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(myIntent);
+            return true;
+        }
+        if (id == R.id.action_export) {
+            if (mDialog == null) {
+                mDialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("确认导出?")
+                        .setMessage("将把数据库中的数据保存成TXT文本,并拷贝到SD卡")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                saveData2Local();
+                            }
+                        }).setNegativeButton("取消", null)
+                        .create();
+            }
+            mDialog.show();
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveData2Local() {
+
+    }
 
     public static interface CallBack {
         void onCompleted();
