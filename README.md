@@ -1,7 +1,7 @@
 # TranslateToast
 翻译助手  <br />
 
-又是一年I/O大会，是不是感觉到自己的英语任需要提升呀😄  <br />
+又是一年I/O大会，是不是感觉到自己的英语太low了呀😄  <br />
 
 下载地址: <br />
 http://fir.im/e8fm  <br />
