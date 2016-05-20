@@ -19,4 +19,5 @@ public class App extends Application {
         super.onCreate();
         DbCore.init(this);
     }
+
 }

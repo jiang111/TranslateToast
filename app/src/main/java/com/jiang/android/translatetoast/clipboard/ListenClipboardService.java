@@ -248,20 +248,7 @@ public final class ListenClipboardService extends Service implements TipViewCont
     }
 
     private String getResultStrByModel(TranslateModel resultModel) {
-        StringBuilder result = new StringBuilder();
-        if (resultModel.getBasic() == null || resultModel.getBasic().getExplains() == null) {
-            result.append("暂无结果");
-            return result.toString();
-        }
-        int size = resultModel.getBasic().getExplains().size();
-        if (size == 0) {
-            result.append("暂无结果");
-        } else {
-            for (int i = 0; i < size; i++) {
-                result.append(resultModel.getBasic().getExplains().get(i)).append(" \n");
-            }
-        }
-        return result.substring(0, result.length() - 2);
+        return Utils.getResultByModel(resultModel);
     }
 
     private Gson getGson() {

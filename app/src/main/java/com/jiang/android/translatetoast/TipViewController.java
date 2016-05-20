@@ -79,7 +79,7 @@ public final class TipViewController implements View.OnClickListener, View.OnTou
     @Override
     public void onClick(View v) {
         removePoppedViewAndClear();
-        MainActivity.startForContent(mContext, mContent.toString());
+        MainActivity.startForContent(mContext);
     }
 
     private void removePoppedViewAndClear() {

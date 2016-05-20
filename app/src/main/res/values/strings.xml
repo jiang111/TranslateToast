@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name">TranslateToast</string>
+    <string name="app_name">翻译助手</string>
     <string name="tip">原文内容:</string>
-    <string name="init_tip">Copy some text to clipboard, a view will be displayed at the top of the screen. Click it, the content will be displayed here.</string>
     <string name="result">翻译:</string>
 </resources>
 

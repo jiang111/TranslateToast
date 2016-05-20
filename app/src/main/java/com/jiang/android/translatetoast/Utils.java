@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.jiang.android.translatetoast.model.TranslateModel;
+
 public final class Utils {
 
     private final static String LOG_TAG = "uc-toast";
@@ -28,5 +30,24 @@ public final class Utils {
 
         Bundle bundle = intent.getExtras();
         Log.d(LOG_TAG, String.format("%s, intent: %s, %s", tag, intent, bundleToString(bundle)));
+    }
+
+    public static String getResultByModel(TranslateModel resultModel) {
+
+        StringBuilder result = new StringBuilder();
+        if (resultModel.getBasic() == null || resultModel.getBasic().getExplains() == null) {
+            result.append("暂无结果");
+            return result.toString();
+        }
+        int size = resultModel.getBasic().getExplains().size();
+        if (size == 0) {
+            result.append("暂无结果");
+        } else {
+            for (int i = 0; i < size; i++) {
+                result.append(resultModel.getBasic().getExplains().get(i)).append(" \n");
+            }
+        }
+        return result.substring(0, result.length() - 2);
+
     }
 }
