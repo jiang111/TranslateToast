@@ -8,6 +8,11 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.text.TextUtils;
 
 import com.jiang.android.translatetoast.clipboard.ClipboardManagerCompat;
+import com.jiang.android.translatetoast.model.TranslateModel;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public final class ListenClipboardService extends Service implements TipViewController.ViewDismissHandler {
@@ -112,13 +117,47 @@ public final class ListenClipboardService extends Service implements TipViewCont
         }
         sLastContent = content;
 
-        if (mTipViewController != null) {
-            mTipViewController.updateContent(content);
-        } else {
-            mTipViewController = new TipViewController(getApplication(), content);
-            mTipViewController.setViewDismissHandler(this);
-            mTipViewController.show();
-        }
+        Call<TranslateModel> call = RestAdapter.getApiService().translate(
+                "TranslateToastApp",
+                "1264267832",
+                "data",
+                "json",
+                "show",
+                "1.1",
+                sLastContent.toString()
+        );
+        call.enqueue(new Callback<TranslateModel>() {
+            @Override
+            public void onResponse(Call<TranslateModel> call, Response<TranslateModel> response) {
+                if (response.code() == 200) {
+                    StringBuilder result = new StringBuilder();
+                    TranslateModel resultModel = response.body();
+                    int size = resultModel.getBasic().getExplains().size();
+                    if (size == 0) {
+                        result.append("暂无结果");
+                    } else {
+                        for (int i = 0; i < size; i++) {
+                            result.append(resultModel.getBasic().getExplains().get(i)).append(" \n");
+                        }
+                    }
+                    String resultStr = result.substring(0, result.length() - 2);
+                    if (mTipViewController != null) {
+                        mTipViewController.updateContent(sLastContent, resultStr);
+                    } else {
+                        mTipViewController = new TipViewController(getApplication(), sLastContent, resultStr);
+                        mTipViewController.setViewDismissHandler(ListenClipboardService.this);
+                        mTipViewController.show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TranslateModel> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
     @Override

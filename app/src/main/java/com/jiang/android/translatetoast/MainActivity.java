@@ -9,6 +9,11 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * API key：1264267832
+     * keyfrom：TranslateToastApp
+     */
+
     private final static String KEY_CONTENT = "content";
     private TextView mTextView;
 

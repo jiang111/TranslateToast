@@ -20,10 +20,13 @@ final class TipViewController implements View.OnClickListener, View.OnTouchListe
     private ViewDismissHandler mViewDismissHandler;
     private CharSequence mContent;
     private TextView mTextView;
+    private TextView mResultTextView;
+    private CharSequence mResultContent;
 
-    public TipViewController(Context application, CharSequence content) {
+    public TipViewController(Context application, CharSequence content, CharSequence result) {
         mContext = application;
         mContent = content;
+        mResultContent = result;
         mWindowManager = (WindowManager) application.getSystemService(Context.WINDOW_SERVICE);
     }
 
@@ -31,9 +34,11 @@ final class TipViewController implements View.OnClickListener, View.OnTouchListe
         mViewDismissHandler = viewDismissHandler;
     }
 
-    public void updateContent(CharSequence content) {
+    public void updateContent(CharSequence content, CharSequence result) {
         mContent = content;
+        mResultContent = result;
         mTextView.setText(mContent);
+        mResultTextView.setText(mResultContent);
     }
 
     public void show() {
@@ -44,6 +49,8 @@ final class TipViewController implements View.OnClickListener, View.OnTouchListe
         mTextView = (TextView) view.findViewById(R.id.pop_view_text);
         mTextView.setText(mContent);
 
+        mResultTextView = (TextView) view.findViewById(R.id.pop_view_text_value);
+        mResultTextView.setText(mResultContent);
         mWholeView = view;
         mContentView = view.findViewById(R.id.pop_view_content_view);
 

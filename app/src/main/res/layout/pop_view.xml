@@ -30,6 +30,26 @@
             android:includeFontPadding="false"
             android:textColor="#000"
             android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:includeFontPadding="false"
+            android:text="@string/result"
+            android:textColor="#999"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/pop_view_text_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:includeFontPadding="false"
+            android:textColor="#000"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </com.jiang.android.translatetoast.ViewContainer>
