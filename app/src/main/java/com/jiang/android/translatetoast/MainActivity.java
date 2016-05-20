@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
 
 
+    private static final String SPLIT = "----";
     private RecyclerView mRecyclerView;
     private List<TranslateModel> mLists = new ArrayList<>();
     private Subscription subscription;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog mDeleteDialog;
     private AlertDialog mClearDialog;
     private String path;
+    private AlertDialog mImportDialog;
 
     public static void startForContent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -202,6 +205,26 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_import) {
+            if (mImportDialog == null) {
+                final EditText editText = new EditText(this);
+                editText.setText(Environment.getExternalStorageDirectory() + "/");
+                mImportDialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("输入路径")
+                        .setView(editText)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String path = editText.getText().toString();
+                                getDataFromPath(path);
+
+                            }
+                        }).setNegativeButton("取消", null)
+                        .create();
+            }
+            mImportDialog.show();
+            return true;
+        }
         if (id == R.id.action_clear) {
             if (mClearDialog == null) {
                 mClearDialog = new AlertDialog.Builder(MainActivity.this)
@@ -219,6 +242,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getDataFromPath(final String path) {
+        Observable.create(new Observable.OnSubscribe<TranslateModel>() {
+            @Override
+            public void call(Subscriber<? super TranslateModel> subscriber) {
+                try {
+                    String result = Utils.ReadTxtFile(MainActivity.this, path);
+                    String[] data = result.split(SPLIT);
+                    if (data == null || data.length == 0) {
+                        subscriber.onError(new NullPointerException("没有数据"));
+                    }
+                    for (int i = 0; i < data.length; i++) {
+                        String itemData = data[i];
+                        TranslateModel model = mGson.fromJson(itemData, TranslateModel.class);
+                        DbUtil.getTranslateService().save(new Translate(DbUtil.getTranslateService().count() + 1, model.getQuery(), itemData));
+                        subscriber.onNext(model);
+                    }
+
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<TranslateModel>() {
+                    @Override
+                    public void onCompleted() {
+                        mAdapter.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showToast(e.toString());
+                    }
+
+                    @Override
+                    public void onNext(TranslateModel translateModels) {
+                        mLists.add(translateModels);
+
+                    }
+                });
     }
 
     private void clearAllData() {
@@ -308,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean saveData2Local() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < mLists.size(); i++) {
-            builder.append(getGson().toJson(mLists.get(i))).append("-|-|-|-");
+            builder.append(getGson().toJson(mLists.get(i))).append(SPLIT);
         }
         path = Environment.getExternalStorageDirectory() + "/translatehelper/" + System.
                 currentTimeMillis() + ".txt";

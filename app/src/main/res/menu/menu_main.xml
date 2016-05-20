@@ -12,6 +12,10 @@
         android:title="@string/action_export"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_import"
+        android:title="@string/action_import"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_clear"
         android:title="@string/action_clear"
         app:showAsAction="never" />
