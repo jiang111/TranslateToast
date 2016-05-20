@@ -171,7 +171,8 @@ public final class ListenClipboardService extends Service implements TipViewCont
                     @Override
                     public void call(String s) {
                         if (TextUtils.isEmpty(s)) {
-                            getDataFromNet();
+                            if (Utils.isNetworkConnected(ListenClipboardService.this))
+                                getDataFromNet();
                         } else {
                             if (mTipViewController != null) {
                                 mTipViewController.updateContent(sLastContent, s);

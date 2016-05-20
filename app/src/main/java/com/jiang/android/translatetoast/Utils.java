@@ -1,6 +1,9 @@
 package com.jiang.android.translatetoast;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -49,5 +52,11 @@ public final class Utils {
         }
         return result.substring(0, result.length() - 2);
 
+    }
+
+    public static boolean isNetworkConnected(Context ct) {
+        ConnectivityManager cm = (ConnectivityManager) ct.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        return ni != null && ni.isConnectedOrConnecting();
     }
 }
