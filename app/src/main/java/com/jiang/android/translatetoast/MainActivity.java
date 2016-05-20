@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < data.length; i++) {
                         String itemData = data[i];
                         TranslateModel model = mGson.fromJson(itemData, TranslateModel.class);
-                        DbUtil.getTranslateService().save(new Translate(DbUtil.getTranslateService().count() + 1, model.getQuery(), itemData));
+                        DbUtil.getTranslateService().save(new Translate(System.currentTimeMillis(), model.getQuery(), itemData));
                         subscriber.onNext(model);
                     }
 

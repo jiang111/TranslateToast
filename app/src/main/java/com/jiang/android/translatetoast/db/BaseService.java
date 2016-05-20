@@ -102,6 +102,7 @@ public class BaseService<T, K>  {
 
     }
 
+
     public void detach(T item) {
         mDao.detach(item);
     }
