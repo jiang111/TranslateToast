@@ -7,12 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.jiang.android.translatetoast.clipboard.ListenClipboardService;
+
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * API key：1264267832
-     * keyfrom：TranslateToastApp
-     */
 
     private final static String KEY_CONTENT = "content";
     private TextView mTextView;

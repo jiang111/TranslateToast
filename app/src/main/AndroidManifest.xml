@@ -9,6 +9,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".App"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -19,13 +20,13 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".ListenClipboardService"
+            android:name=".clipboard.ListenClipboardService"
             android:enabled="true"
             android:exported="true"
             android:process=":process"></service>
 
         <receiver
-            android:name=".BootCompletedReceiver"
+            android:name=".clipboard.BootCompletedReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

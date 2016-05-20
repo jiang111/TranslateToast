@@ -1,4 +1,4 @@
-package com.jiang.android.translatetoast;
+package com.jiang.android.translatetoast.http;
 
 import com.jiang.android.translatetoast.model.TranslateModel;
 
@@ -27,7 +27,7 @@ public class RestAdapter {
         return retrofit.create(ApiService.class);
     }
 
-    static interface ApiService {
+    public  static interface ApiService {
 
         @GET("/openapi.do")
         Call<TranslateModel> translate(@Query("keyfrom") String keyfrom, @Query("key") String key, @Query("type") String type, @Query("doctype") String doctype, @Query("callback") String callback, @Query("version") String version, @Query("q") String q);

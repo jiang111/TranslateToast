@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-final class TipViewController implements View.OnClickListener, View.OnTouchListener, ViewContainer.KeyEventHandler {
+public final class TipViewController implements View.OnClickListener, View.OnTouchListener, ViewContainer.KeyEventHandler {
 
     private WindowManager mWindowManager;
     private Context mContext;

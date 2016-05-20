@@ -1,4 +1,4 @@
-package com.jiang.android.translatetoast;
+package com.jiang.android.translatetoast.clipboard;
 
 
 import android.content.Context;
