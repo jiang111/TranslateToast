@@ -10,9 +10,12 @@ import com.jiang.android.translatetoast.db.DbCore;
 
 public class App extends Application {
 
-    public static final String API_KEY = "1264267832";
+    public static final String KEY_NAME = "app_key";
+    public static final String APP_NAME = "app_name";
 
-    public static final String keyfrom = "TranslateToastApp";
+    protected static final String API_KEY = "1264267832";
+
+    protected static final String keyfrom = "TranslateToastApp";
 
     @Override
     public void onCreate() {

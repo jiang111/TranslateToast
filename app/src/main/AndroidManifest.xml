@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jiang.android.translatetoast">
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -8,14 +9,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".App"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar">
@@ -25,11 +28,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".clipboard.ListenClipboardService"
             android:enabled="true"
             android:exported="true"
-            android:process=":process"></service>
+            android:process=":process" />
 
         <receiver
             android:name=".clipboard.BootCompletedReceiver"
@@ -39,6 +43,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ShuoMingActivity"></activity>
     </application>
 
 </manifest>

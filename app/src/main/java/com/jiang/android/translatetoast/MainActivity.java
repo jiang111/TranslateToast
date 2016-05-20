@@ -225,6 +225,12 @@ public class MainActivity extends AppCompatActivity {
             mImportDialog.show();
             return true;
         }
+
+        if (id == R.id.action_config) {
+            startActivity(new Intent(this, ShuoMingActivity.class));
+            return true;
+        }
+
         if (id == R.id.action_clear) {
             if (mClearDialog == null) {
                 mClearDialog = new AlertDialog.Builder(MainActivity.this)
@@ -381,6 +387,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isSuccess = Utils.writeTxtToFile(this, builder.toString(), Environment.getExternalStorageDirectory() + "/translatehelper/", System.currentTimeMillis() + ".txt");
         return isSuccess;
     }
+
 
     @Override
     protected void onDestroy() {

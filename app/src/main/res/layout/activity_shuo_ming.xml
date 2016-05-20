@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_shuo_ming"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jiang.android.translatetoast.ShuoMingActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="由于有道Api每小时5000次的限制,如果发现无法翻译的话,可能是API做了限制,你可以通过自己申请API来进行翻译,进入下面的网页,填写相关的内容,填完以后把获得到的应用名称和应用的KEY,填如下面的框内并点击确定"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/sm_config"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="点击进入:http://fanyi.youdao.com/openapi?path=data-mode" />
+
+    <EditText
+        android:id="@+id/sm_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="keyfrom"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/sm_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="API key"
+        android:padding="15dp" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/sm_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确定" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/sm_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="使用默认的配置" />
+</LinearLayout>

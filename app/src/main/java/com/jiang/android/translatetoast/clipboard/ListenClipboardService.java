@@ -187,9 +187,13 @@ public final class ListenClipboardService extends Service implements TipViewCont
     }
 
     private void getDataFromNet() {
+
+        String name = Utils.getForm(ListenClipboardService.this, App.APP_NAME);
+        String key = Utils.getKey(ListenClipboardService.this, App.KEY_NAME);
+        Log.i(TAG, "getDataFromNet: " + name + " : " + key);
         Call<TranslateModel> call = RestAdapter.getApiService().translate(
-                App.keyfrom,
-                App.API_KEY,
+                name,
+                key,
                 "data",
                 "json",
                 "show",

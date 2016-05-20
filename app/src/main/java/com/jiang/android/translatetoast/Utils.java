@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+
+import static com.jiang.android.translatetoast.App.API_KEY;
 
 public final class Utils {
 
@@ -163,4 +166,21 @@ public final class Utils {
             }
         });
     }
+
+    public static String getKey(Context context, String key) {
+        String value = SharePrefUtil.getString(context.getApplicationContext(), key, API_KEY);
+        if (TextUtils.isEmpty(value)) {
+            return App.API_KEY;
+        }
+        return value;
+    }
+
+    public static String getForm(Context context, String key) {
+        String value = SharePrefUtil.getString(context.getApplicationContext(), key, App.keyfrom);
+        if (TextUtils.isEmpty(value)) {
+            return App.keyfrom;
+        }
+        return value;
+    }
+
 }
