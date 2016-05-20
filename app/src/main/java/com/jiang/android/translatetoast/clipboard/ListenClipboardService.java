@@ -207,7 +207,8 @@ public final class ListenClipboardService extends Service implements TipViewCont
                                      public void call(Subscriber<? super String> subscriber) {
                                          try {
                                              String dbStr = getGson().toJson(translateModel);
-                                             getTranslateService().save(new Translate(getTranslateService().count() + 1, sLastContent.toString(), dbStr));
+                                             long id = getTranslateService().count() + 1;
+                                             getTranslateService().save(new Translate(id, sLastContent.toString(), dbStr));
                                              subscriber.onNext("success");
                                              subscriber.onCompleted();
                                          } catch (Exception e) {

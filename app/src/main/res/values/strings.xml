@@ -4,5 +4,6 @@
     <string name="result">翻译:</string>
     <string name="action_about">关于该项目</string>
     <string name="action_export">导出到本地</string>
+    <string name="action_clear">清空数据</string>
 </resources>
 
