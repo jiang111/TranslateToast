@@ -21,8 +21,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
-
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'io.reactivex:rxjava:1.1.0'
@@ -32,6 +30,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'de.greenrobot:greendao:2.0.0'
     compile 'com.jiang.android.recyclerviewadapter:recyclerviewadapter:1.0.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
     testCompile 'junit:junit:4.12'
 }
