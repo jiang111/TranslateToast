@@ -51,8 +51,12 @@ public final class Utils {
     public static String getResultByModel(TranslateModel resultModel) {
 
         StringBuilder result = new StringBuilder();
-        if (resultModel.getBasic() == null || resultModel.getBasic().getExplains() == null) {
-            result.append("暂无结果");
+        if (resultModel.getBasic() == null || resultModel.getBasic().getExplains() == null || resultModel.getBasic().getExplains().size() == 0) {
+            if (resultModel.getTranslation() != null && resultModel.getTranslation().size() > 0) {
+                result.append(resultModel.getTranslation().get(0));
+            } else {
+                result.append("暂无结果");
+            }
             return result.toString();
         }
         int size = resultModel.getBasic().getExplains().size();
