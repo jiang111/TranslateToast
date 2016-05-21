@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,7 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
 
     private static final String SPLIT = "----";
     private RecyclerView mRecyclerView;
@@ -69,8 +71,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.main_recyclerview);
         ListenClipboardService.start(this);
-        getDateFromDb();
         initData();
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                getDateFromDb();
+            }
+        });
 
     }
 
@@ -121,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getDateFromDb() {
-        subscription = Observable.create(new Observable.OnSubscribe<TranslateModel>() {
+        Observable.create(new Observable.OnSubscribe<TranslateModel>() {
             @Override
             public void call(Subscriber<? super TranslateModel> subscriber) {
 
@@ -141,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).onBackpressureDrop()
+                .retry()
                 .subscribe(new Subscriber<TranslateModel>() {
                     @Override
                     public void onCompleted() {
@@ -150,7 +158,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.i(TAG, "onError: " + e);
                         showToast(e.toString());
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
                     }
 
                     @Override
@@ -391,12 +401,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (subscriptionSave != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
-        if (subscriptionSave != null && !subscriptionSave.isUnsubscribed()) {
-            subscriptionSave.unsubscribe();
-        }
+
         super.onDestroy();
     }
 
